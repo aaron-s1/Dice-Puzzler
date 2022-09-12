@@ -154,12 +154,27 @@ public class PlayerMove : MonoBehaviour
 
                 if (tilesHitCount == totalTilesToDestroy)
                     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
+
+                ///////////
+                if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
+                    tileHit = hit.transform.gameObject;
+                    tileHit.SetActive(false);
+                    Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
+                }
+                
             }
             // }
             // }
 
             else
             {
+                // if (Physics.Raycast(transform.position, raycastDownwards, out hit, destroyTilesRayLength, 1 << 6))
+                // {
+                //     var tileHit = hit.transform.gameObject;
+                //     tileHit.SetActive(false);
+                //     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
+                // }
+
                 Debug.Log("destroy tiles ray");
                 fireDestroyTilesRay = false;
                 destroyTilesRayLength = 1;
