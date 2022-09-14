@@ -88,8 +88,6 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator MovePlayer(Vector3 direction)
     {
-        Debug.Log("is moving = " + isMoving);
-        Debug.Log("move player");
         if (!Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, 1f, validMovementTileLayers))        
         {
             Debug.DrawRay(bottomOfPlayer.position, moveDirection, Color.red);
@@ -97,7 +95,6 @@ public class PlayerMove : MonoBehaviour
             yield break;
         }
         
-        Debug.Log("is moving");
         isMoving = true;
 
         float elapsedTime = 0;
@@ -117,16 +114,16 @@ public class PlayerMove : MonoBehaviour
         transform.rotation = targetRotation;
 
 
-//
+        // Only destroy/change tiles if landing on a regular tile.
         if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
             fireDestroyTilesRay = true;
             yield return new WaitUntil(() => !fireDestroyTilesRay);
         }
 
-//
+
 
         isMoving = false;
-        Debug.Log("movement ended.");
+        // Debug.Log("movement ended.");
         yield return null;
     }
 
@@ -139,14 +136,14 @@ public class PlayerMove : MonoBehaviour
             totalTilesToDestroy = GetNumberOfSideTouchingTile();    // prevent mass re-caching later.
 
             // rayLength starts at 1 to first check if an appropriate tile is hit.
-            // if it is, *then* increment towards lengthOfDestroyTilesRaycast.
+            // if it is, *then* raycast towards numerical value of dice side.
 
-            // if (!TouchingSpecialTile()) {
-            // 
             if (Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, destroyTilesRayLength, 1 << 6))
             {
                 var tileHit = hit.transform.gameObject;
-                tileHit.SetActive(false);
+                RemoveTile(tileHit);
+                // GameManager.Instance.RemoveFromToTileList(tileHit);
+                // tileHit.SetActive(false);
                 tilesHitCount++;
 
                 if (destroyTilesRayLength < totalTilesToDestroy)
@@ -155,27 +152,19 @@ public class PlayerMove : MonoBehaviour
                 if (tilesHitCount == totalTilesToDestroy)
                     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
 
-                ///////////
+                
                 if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
                     tileHit = hit.transform.gameObject;
-                    tileHit.SetActive(false);
+                    RemoveTile(tileHit);
+                    // GameManager.Instance.RemoveFromToTileList(tileHit);
+                    // tileHit.SetActive(false);
                     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
                 }
                 
             }
-            // }
-            // }
 
             else
             {
-                // if (Physics.Raycast(transform.position, raycastDownwards, out hit, destroyTilesRayLength, 1 << 6))
-                // {
-                //     var tileHit = hit.transform.gameObject;
-                //     tileHit.SetActive(false);
-                //     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
-                // }
-
-                Debug.Log("destroy tiles ray");
                 fireDestroyTilesRay = false;
                 destroyTilesRayLength = 1;
                 tilesHitCount = 0;
@@ -186,7 +175,7 @@ public class PlayerMove : MonoBehaviour
 
     int GetNumberOfSideTouchingTile()
     {
-        // Assumes side names are just "4", "3", etc.
+        // Currently assumes names of dice sides  are just "4", "3", etc.
         if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 7))
         {
             totalTilesToDestroy = int.Parse(hit.transform.gameObject.name);
@@ -195,14 +184,22 @@ public class PlayerMove : MonoBehaviour
         return 0;
     }
 
-    bool TouchingSpecialTile()
-    {
-        if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 9))
-            return true;
-        else return false;        
-    }
 
-    
+    void RemoveTile(GameObject tile)
+    {
+        GameManager.Instance.RemoveFromTileList(tile);
+        tile.SetActive(false);
+    }    
+
+
+    // bool TouchingSpecialTile()
+    // {
+    //     if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 9))
+    //         return true;
+    //     else return false;        
+    // }
+
+
     IEnumerator RotatePlayer(float elapsedTime)
     {
         transform.rotation = Quaternion.Lerp(originalRotation, targetRotation, (elapsedTime / timeToRotate));
