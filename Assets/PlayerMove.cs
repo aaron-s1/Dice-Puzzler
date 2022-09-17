@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviour
 
     int destroyTilesRayLength;
     int totalTilesToDestroy;
-    int tilesHitCount = 0;
+    int destroyableTilesHitCount = 0;
 
     int validMovementTileLayers;
 
@@ -44,15 +44,16 @@ public class PlayerMove : MonoBehaviour
 
     #region Movement.
 
-    void Update() => MovementInputs();
+    void Update() => MovementInput();
 
 
-    void MovementInputs()
+    void MovementInput()
     {
         if (!isMoving)
         {
+            // reduce lines later.
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
+            {                
                 originalRotation = transform.rotation;
                 targetRotation = Quaternion.Euler(-90f, 0, 0) * transform.rotation;
 
@@ -88,12 +89,8 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator MovePlayer(Vector3 direction)
     {
-        if (!Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, 1f, validMovementTileLayers))        
-        {
-            Debug.DrawRay(bottomOfPlayer.position, moveDirection, Color.red);
-            Debug.Log("MOVE PLAYER DID NOT FIND VALID TILE");
+        if (!ValidMovementFound())
             yield break;
-        }
         
         isMoving = true;
 
@@ -113,9 +110,9 @@ public class PlayerMove : MonoBehaviour
         transform.position = targetPos;
         transform.rotation = targetRotation;
 
-
-        // Only destroy/change tiles if landing on a regular tile.
-        if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
+        
+        if (LandedOnNormalTile())
+        {
             fireDestroyTilesRay = true;
             yield return new WaitUntil(() => !fireDestroyTilesRay);
         }
@@ -127,7 +124,31 @@ public class PlayerMove : MonoBehaviour
         yield return null;
     }
 
+
+    bool ValidMovementFound() 
+    {
+        if (Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, 1f, validMovementTileLayers)) {
+            Debug.Log("MOVE PLAYER DID NOT FIND VALID TILE");
+            return true;
+        }
+        return false;
+    }    
+
     #endregion
+
+    bool LandedOnNormalTile()
+    {
+        if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6))
+            return true;
+        return false;
+    }
+
+    
+    bool RaycastSeesNormalTile(Vector3 direction, float rayLength) {
+        if (Physics.Raycast(bottomOfPlayer.position, direction, out hit, rayLength, 1 << 6))
+            return true;
+        return false;
+    }
 
 
     void FixedUpdate() {
@@ -135,39 +156,37 @@ public class PlayerMove : MonoBehaviour
         {
             totalTilesToDestroy = GetNumberOfSideTouchingTile();    // prevent mass re-caching later.
 
-            // rayLength starts at 1 to first check if an appropriate tile is hit.
-            // if it is, *then* raycast towards numerical value of dice side.
-
-            if (Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, destroyTilesRayLength, 1 << 6))
+            // destroyTilesRayLength starts at 1 in order to first check if any tile is hit.
+            // if so, increment it until totalTilesToDestroy is reached.
+            if (RaycastSeesNormalTile(moveDirection, destroyTilesRayLength))
             {
                 var tileHit = hit.transform.gameObject;
-                RemoveTile(tileHit);
-                // GameManager.Instance.RemoveFromToTileList(tileHit);
-                // tileHit.SetActive(false);
-                tilesHitCount++;
+
+                // if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
+                if (LandedOnNormalTile()) {
+                    var tileLandedOn = hit.transform.gameObject;
+                    GameManager.Instance.RemoveFromTileList(tileLandedOn, true);     // becomes special tile
+                    Instantiate(specialTile, tileLandedOn.transform.position, tileLandedOn.transform.rotation);
+                }
+                
+                destroyableTilesHitCount++;
 
                 if (destroyTilesRayLength < totalTilesToDestroy)
                     destroyTilesRayLength++;
 
-                if (tilesHitCount == totalTilesToDestroy)
+                if (destroyableTilesHitCount == totalTilesToDestroy) {
                     Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
-
-                
-                if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
-                    tileHit = hit.transform.gameObject;
-                    RemoveTile(tileHit);
-                    // GameManager.Instance.RemoveFromToTileList(tileHit);
-                    // tileHit.SetActive(false);
-                    Instantiate(specialTile, tileHit.transform.position, tileHit.transform.rotation);
+                    GameManager.Instance.RemoveFromTileList(tileHit, true);
                 }
-                
+
+                else GameManager.Instance.RemoveFromTileList(tileHit);
             }
 
             else
             {
                 fireDestroyTilesRay = false;
                 destroyTilesRayLength = 1;
-                tilesHitCount = 0;
+                destroyableTilesHitCount = 0;
             }
         }
     }
@@ -183,21 +202,6 @@ public class PlayerMove : MonoBehaviour
         }
         return 0;
     }
-
-
-    void RemoveTile(GameObject tile)
-    {
-        GameManager.Instance.RemoveFromTileList(tile);
-        tile.SetActive(false);
-    }    
-
-
-    // bool TouchingSpecialTile()
-    // {
-    //     if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 9))
-    //         return true;
-    //     else return false;        
-    // }
 
 
     IEnumerator RotatePlayer(float elapsedTime)
