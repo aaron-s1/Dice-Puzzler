@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
 
+    public static PlayerMove Instance { get; private set; }
+
     [SerializeField] float timeToMove = 1f;
     [SerializeField] float timeToRotate = 0.5f;
 
@@ -29,6 +31,9 @@ public class PlayerMove : MonoBehaviour
     int destroyableTilesHitCount = 0;
 
     int validMovementTileLayers;
+
+    void Awake() =>
+        Instance = this;
 
     
     void Start()
@@ -136,10 +141,12 @@ public class PlayerMove : MonoBehaviour
 
     #endregion
 
-    bool LandedOnNormalTile()
+    public bool LandedOnNormalTile()
     {
-        if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6))
+        if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
+            // GameManager.Instance.currentTileTouched = hit.transform.gameObject;
             return true;
+        }
         return false;
     }
 
@@ -163,12 +170,11 @@ public class PlayerMove : MonoBehaviour
                 var tileHit = hit.transform.gameObject;
 
                 // if (Physics.Raycast(transform.position, raycastDownwards, out hit, 2f, 1 << 6)) {
-                if (LandedOnNormalTile()) {
-                    var tileLandedOn = hit.transform.gameObject;
-                    GameManager.Instance.RemoveFromTileList(tileLandedOn, true);     // becomes special tile
-                    Instantiate(specialTile, tileLandedOn.transform.position, tileLandedOn.transform.rotation);
+                if (LandedOnNormalTile())
+                {
+                    ReplaceWithSpecialTile();
                 }
-                
+
                 destroyableTilesHitCount++;
 
                 if (destroyTilesRayLength < totalTilesToDestroy)
@@ -191,6 +197,12 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void ReplaceWithSpecialTile()
+    {
+        var tileLandedOn = hit.transform.gameObject;
+        GameManager.Instance.RemoveFromTileList(tileLandedOn, true);     // becomes special tile
+        Instantiate(specialTile, tileLandedOn.transform.position, tileLandedOn.transform.rotation);
+    }
 
     int GetNumberOfSideTouchingTile()
     {
