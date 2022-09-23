@@ -7,9 +7,20 @@ public class GodsHand : MonoBehaviour
     Vector3 newTilePos;
     float y_offset = 0.5f;
 
+    // PlayerMove playerMove;
+
+    // void Awake() {
+    //     playerMove = PlayerMove.Instance;
+    // }
+
     void Update() {
-        if (Input.GetKey(KeyCode.Space))
-            FindRandomDestroyableTile();
+        if (Input.GetKey(KeyCode.Space)) {   // change if condition later.   
+            Debug.Log(PlayerMove.Instance.movePlayer); 
+            if (PlayerMove.Instance.movePlayer == null) {
+                // StopCoroutine(PlayerMove.Instance.movePlayer);
+                FindRandomDestroyableTile();
+            }
+        }
     }
 
 

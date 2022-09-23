@@ -10,13 +10,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public List<GameObject> listOfDestroyableTiles;   // make private later?
     [SerializeField] GameObject destroyableTiles;
     [SerializeField] TMP_Text destroyableTilesText;
-    //[SerializeField]
-    public List<GameObject> listOfDestroyableTiles;   // make private later?
-    // int destroyableTilesCount;
 
-    public GameObject currentTileTouched;
+    // public GameObject currentTileTouched;
 
     float originalTimeScale;
 
@@ -29,23 +27,20 @@ public class GameManager : MonoBehaviour
 
         listOfDestroyableTiles = new List<GameObject>();        
         originalTimeScale = Time.timeScale;
-
-        // if (!int.TryParse(destroyableTilesText.text, out int number))
-
         destroyableTilesText.text = "0";
+
         foreach (Transform child in destroyableTiles.transform)
             AddToTileList(child.gameObject);
     }
 
 
     void Update() {
-        EscapeKeyPausesGame();
-
-        if (Input.GetKeyDown(KeyCode.I))
-            SceneManager.LoadScene("Dice Thing");
-
         CheckForDevMode();
+        EscapeKeyPausesGame();
+        I_KeyReloadsScene();
     }
+
+
     
 
     // ONLY used by self.
@@ -83,21 +78,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    int tileCountAsInt;
 
-    void ListTilesRemaining(int adjustment)
-    {
+    void ListTilesRemaining(int adjustment) =>
         destroyableTilesText.text = (int.Parse(destroyableTilesText.text) + adjustment).ToString();
-        // int parsing = int.Parse(destroyableTilesText.text);
-        // parsing += adjustment;
-        // destroyableTilesText.text = parsing.ToString();
-        // tileCountAsInt += adjustment;
-        // Debug.Log(tileCountAsInt);
-        // destroyableTilesText.text = tileCountAsInt.ToString();
-        // = int.Parse(destroyableTilesText.text);
-        // tileCountAsInt += adjustment;
-    }
 
+
+
+    //////////////////////////////////////////////////////////////////////
+
+    void I_KeyReloadsScene()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        SceneManager.LoadScene("Dice Thing");
+    }
 
     void EscapeKeyPausesGame() 
     {

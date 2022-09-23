@@ -13,9 +13,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] GameObject specialTile;    // rename later.
     [SerializeField] Transform bottomOfPlayer;
 
+    public Coroutine movePlayer;
+
     Vector3 originalPos;
     Vector3 targetPos;
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
     Vector3 raycastDownwards;
 
     Quaternion originalRotation;
@@ -62,7 +64,8 @@ public class PlayerMove : MonoBehaviour
                 originalRotation = transform.rotation;
                 targetRotation = Quaternion.Euler(-90f, 0, 0) * transform.rotation;
 
-                StartCoroutine(MovePlayer(moveDirection = Vector3.back));
+                // StartCoroutine(MovePlayer(moveDirection = Vector3.back));
+                movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.back));
             }
 
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
@@ -70,23 +73,26 @@ public class PlayerMove : MonoBehaviour
                 originalRotation = transform.rotation;
                 targetRotation = Quaternion.Euler(90f, 0, 0) * transform.rotation;
 
-                StartCoroutine(MovePlayer(moveDirection = Vector3.forward));
+                // StartCoroutine(MovePlayer(moveDirection = Vector3.forward));
+                movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.forward));
             }
 
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 originalRotation = transform.rotation;
                 targetRotation = Quaternion.Euler(0, 0, -90f) * transform.rotation;
-
-                StartCoroutine(MovePlayer(moveDirection = Vector3.right));
+                
+                //StartCoroutine(MovePlayer(moveDirection = Vector3.right));
+                movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.right));
             }
 
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 originalRotation = transform.rotation;
-                targetRotation = Quaternion.Euler(0, 0, 90f) * transform.rotation;
+                targetRotation = Quaternion.Euler(0, 0, 90f) * transform.rotation;  
 
-                StartCoroutine(MovePlayer(moveDirection = Vector3.left));
+                // StartCoroutine(MovePlayer(moveDirection = Vector3.left));
+                movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.left));          
             }
         }
     }
@@ -124,7 +130,9 @@ public class PlayerMove : MonoBehaviour
 
 
 
+        movePlayer = null;
         isMoving = false;
+
         // Debug.Log("movement ended.");
         yield return null;
     }
@@ -133,9 +141,9 @@ public class PlayerMove : MonoBehaviour
     bool ValidMovementFound() 
     {
         if (Physics.Raycast(bottomOfPlayer.position, moveDirection, out hit, 1f, validMovementTileLayers)) {
-            Debug.Log("MOVE PLAYER DID NOT FIND VALID TILE");
             return true;
         }
+        Debug.Log("MOVE PLAYER DID NOT FIND VALID TILE");
         return false;
     }    
 
