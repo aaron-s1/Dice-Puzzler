@@ -42,7 +42,7 @@ public class PlayerMove : MonoBehaviour
     {        
         validMovementTileLayers = 1 << 6 | 1 << 9;
 
-        moveDirection = new Vector3(0,0,0);
+        moveDirection = new Vector3(0, 0, 0);
         raycastDownwards = new Vector3 (0, -1f, 0);
 
         destroyTilesRayLength = 1;
@@ -51,50 +51,45 @@ public class PlayerMove : MonoBehaviour
 
     #region Movement.
 
-    void Update() => MovementInput();
+    void Update() =>
+        MovementInput();
 
 
     void MovementInput()
     {
         if (!isMoving)
         {
-            // reduce lines later.
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {                
-                originalRotation = transform.rotation;
-                targetRotation = Quaternion.Euler(-90f, 0, 0) * transform.rotation;
-
-                // StartCoroutine(MovePlayer(moveDirection = Vector3.back));
+            {   
+                RotateTowards(new Vector3 (-90f, 0, 0));             
                 movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.back));
             }
 
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                originalRotation = transform.rotation;
-                targetRotation = Quaternion.Euler(90f, 0, 0) * transform.rotation;
-
-                // StartCoroutine(MovePlayer(moveDirection = Vector3.forward));
+                RotateTowards(new Vector3 (90f, 0, 0));
                 movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.forward));
             }
 
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                originalRotation = transform.rotation;
-                targetRotation = Quaternion.Euler(0, 0, -90f) * transform.rotation;
-                
-                //StartCoroutine(MovePlayer(moveDirection = Vector3.right));
+                RotateTowards(new Vector3 (0, 0, -90f));
                 movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.right));
             }
 
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                originalRotation = transform.rotation;
-                targetRotation = Quaternion.Euler(0, 0, 90f) * transform.rotation;  
-
-                // StartCoroutine(MovePlayer(moveDirection = Vector3.left));
+                RotateTowards(new Vector3 (0, 0, 90f));
                 movePlayer = StartCoroutine(MovePlayer(moveDirection = Vector3.left));          
             }
         }
+    }
+
+
+    void RotateTowards(Vector3 rotation)
+    {
+        originalRotation = transform.rotation;
+        targetRotation = Quaternion.Euler(rotation) * transform.rotation;
     }
 
 
