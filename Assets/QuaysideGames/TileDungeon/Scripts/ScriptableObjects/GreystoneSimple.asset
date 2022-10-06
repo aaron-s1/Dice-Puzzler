@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bbfc4ea9eeab24982726ca09d3c78a, type: 3}
+  m_Name: GreystoneSimple
+  m_EditorClassIdentifier: 
+  Tiles:
+  - _tileType: tile_corner_1
+    _prefab: {fileID: 8372622776424674565, guid: a60b9b03e4a919b4a94122adc4f987a7,
+      type: 3}
+  - _tileType: tile_crossroads_4
+    _prefab: {fileID: 9047848734609323880, guid: 3e94df538c583c546837f3bedc6d4c87,
+      type: 3}
+  - _tileType: tile_end
+    _prefab: {fileID: 7652595867804756468, guid: a639e04444dd4e84c844cad67d14a70e,
+      type: 3}
+  - _tileType: tile_straight
+    _prefab: {fileID: 1226001563944290886, guid: 1c29cfd414f1f024998e971c2ed1ac87,
+      type: 3}
+  - _tileType: tile_tjunc_2
+    _prefab: {fileID: 719304505035042868, guid: f87cff0b867a2644d9ae1211a05a41c7,
+      type: 3}

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bbfc4ea9eeab24982726ca09d3c78a, type: 3}
+  m_Name: GreystoneMatch
+  m_EditorClassIdentifier: 
+  Tiles:
+  - _tileType: tile_corner_0
+    _prefab: {fileID: 5307298602861861215, guid: 63bfdaed9c8926747b3f1487729a1fb3,
+      type: 3}
+  - _tileType: tile_corner_1
+    _prefab: {fileID: 8372622776424674565, guid: a60b9b03e4a919b4a94122adc4f987a7,
+      type: 3}
+  - _tileType: tile_crossroads_0
+    _prefab: {fileID: 9187094817144404384, guid: 977106ab33165024a96c4a0a33bcf1ad,
+      type: 3}
+  - _tileType: tile_crossroads_1
+    _prefab: {fileID: 8159179226130694373, guid: 9c6101b29254e0e4896c398977281dd3,
+      type: 3}
+  - _tileType: tile_crossroads_2a
+    _prefab: {fileID: 524022834981114542, guid: 614c4e97fa21e6846a34c4c32343bcfb,
+      type: 3}
+  - _tileType: tile_crossroads_2b
+    _prefab: {fileID: 1674629296406888877, guid: 448b8be1cd2320240983093c718520c3,
+      type: 3}
+  - _tileType: tile_crossroads_3
+    _prefab: {fileID: 7460158199390907045, guid: 5b75e43e7babfb54c887c3e61506ae5d,
+      type: 3}
+  - _tileType: tile_crossroads_4
+    _prefab: {fileID: 9047848734609323880, guid: 3e94df538c583c546837f3bedc6d4c87,
+      type: 3}
+  - _tileType: tile_end
+    _prefab: {fileID: 7652595867804756468, guid: a639e04444dd4e84c844cad67d14a70e,
+      type: 3}
+  - _tileType: tile_straight
+    _prefab: {fileID: 1226001563944290886, guid: 1c29cfd414f1f024998e971c2ed1ac87,
+      type: 3}
+  - _tileType: tile_tjunc_0
+    _prefab: {fileID: 3845993255220454888, guid: 5df9c0da093b80f4ba25eb7f2befd6dd,
+      type: 3}
+  - _tileType: tile_tjunc_1a
+    _prefab: {fileID: 6909221482103114784, guid: 05180c71202b2a34ebda34c8f549ce95,
+      type: 3}
+  - _tileType: tile_tjunc_1b
+    _prefab: {fileID: 4882446231562099850, guid: bc8d3625a86a04347a254c153ddd1dc7,
+      type: 3}
+  - _tileType: tile_tjunc_2
+    _prefab: {fileID: 719304505035042868, guid: f87cff0b867a2644d9ae1211a05a41c7,
+      type: 3}

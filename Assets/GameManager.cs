@@ -10,12 +10,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public List<GameObject> listOfDestroyableTiles;   // make private later?
+    [SerializeField] TextMeshProUGUI destroyableTilesText;
+
+    public GameObject replacedTiles;
     [SerializeField] GameObject destroyableTiles;
-    [SerializeField] TMP_Text destroyableTilesText;
+    [HideInInspector] public List<GameObject> listOfDestroyableTiles;
 
-    // public GameObject currentTileTouched;
 
+    [HideInInspector] public GameObject storingFiredParticles;
+
+    
     float originalTimeScale;
 
     bool devModeEnabled;
@@ -25,12 +29,16 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        listOfDestroyableTiles = new List<GameObject>();        
+        listOfDestroyableTiles = new List<GameObject>();
+        storingFiredParticles = new GameObject("Fired Tile Particles");     // i don't wanna make a pool :(
+
         originalTimeScale = Time.timeScale;
+        
+        // ensures that initial string is parseable
         destroyableTilesText.text = "0";
 
         foreach (Transform child in destroyableTiles.transform)
-            AddToTileList(child.gameObject);
+            AddToDestroyableTileList(child.gameObject);
     }
 
 
@@ -41,55 +49,31 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
-
     // ONLY used by self.
-    public void AddToTileList(GameObject tile)
+    private void AddToDestroyableTileList(GameObject tile)
     {
         listOfDestroyableTiles.Add(tile);
         ListTilesRemaining(1);
     }
 
     // ONLY used by other scripts.
-    public void RemoveFromTileList(GameObject tile, bool specialTileSpawned = false)
+    public void RemoveFromDestroyableTilesList(GameObject tile)
     {
-        tile.SetActive(false);
-        FireTilePoofParticles(tile, specialTileSpawned);
         listOfDestroyableTiles.Remove(tile);
         ListTilesRemaining(-1);
     }
 
 
-    void FireTilePoofParticles(GameObject tile, bool specialTileSpawned) 
-    {
-        var particlesObj = tile.transform.GetChild(0).gameObject;
-        var particles = particlesObj.GetComponentInChildren<ParticleSystem>();        
-
-        if (particles != null)
-        {            
-            if (specialTileSpawned) {
-                var particlesMain = particles.main;
-                particlesMain.startColor = new Color (0f, 255f, 255f);     // teal-ish color
-            }
-
-            particlesObj.transform.parent = null;
-            particlesObj.SetActive(true);
-            particles.Play();
-        }
-    }
-
-
     void ListTilesRemaining(int adjustment) =>
         destroyableTilesText.text = (int.Parse(destroyableTilesText.text) + adjustment).ToString();
+    
 
 
-
-    //////////////////////////////////////////////////////////////////////
 
     void I_KeyReloadsScene()
     {
         if (Input.GetKeyDown(KeyCode.I))
-        SceneManager.LoadScene("Dice Thing");
+            SceneManager.LoadScene("Dice Thing");
     }
 
     void EscapeKeyPausesGame() 
@@ -103,9 +87,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Q -> W -> E -> R
     void CheckForDevMode() 
-    {
-        // Q -> W -> E -> R
+    {        
         if (Input.GetKey(KeyCode.Q))
             if (Input.GetKey(KeyCode.W))
                 if (Input.GetKey(KeyCode.E))

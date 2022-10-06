@@ -1,0 +1,22 @@
+~~ Teleport ~~
+- God teleports player. Graphics, special poof, special audio cue.
+
+
+~~ Cameras ~~
+- Fix camera positions.
+- Remap some input keys.
+
+
+~~ Player ~~
+- Show 2D position
+
+
+~~ TESTING ~~
+- Bug test.
+
+~~ Ending Game ~~
+- Decide on winning tiles amount.
+
+
+> clean up scripts
+
