@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(raycastDirectionOrigin.position, moveDirection, out hit, 1f, validMovementTileLayers))
             return true;
             
-        Debug.Log("MOVE PLAYER DID NOT FIND VALID TILE");
+        Debug.Log("PLAYER DID NOT FIND VALID TILE");
         return false;
     }    
 
@@ -238,6 +238,7 @@ public class Player : MonoBehaviour
     // not movement related.
 
     public void DisableAndReplaceTile(GameObject tile, bool replaceWithSpecialTile = false) {
+        Debug.Log("replaced");
         // tile.GetComponent<FirePoofParticles>().Fire(replaceWithSpecialTile);
         GameManager.Instance.RemoveFromDestroyableTilesList(tile);
 
@@ -245,6 +246,7 @@ public class Player : MonoBehaviour
 
         if (replaceWithSpecialTile) 
         {
+            Debug.Log("should spawn special tile");
             var spawnedSpecialTile = Instantiate(specialTile, tile.transform.position, tile.transform.rotation);
             spawnedSpecialTile.transform.parent = GameManager.Instance.replacedTiles.transform;
         }

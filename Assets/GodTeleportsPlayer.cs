@@ -6,9 +6,10 @@ public class GodTeleportsPlayer : MonoBehaviour
 {
     Player player;
 
-    [SerializeField] int remainingTeleportMoves;
+    public int remainingTeleportMoves;
+    // [SerializeField] int remainingTeleportMoves;
     [SerializeField] ParticleSystem teleportParticle;
-    [SerializeField] AudioClip teleportSoundEffect;
+    // [SerializeField] AudioClip teleportSoundEffect;
     [Space(10)]
     [SerializeField] float teleportTime;
     [SerializeField] float postTeleportMovementLockoutTime;
@@ -17,8 +18,11 @@ public class GodTeleportsPlayer : MonoBehaviour
 
     Vector3 newTilePos;
 
-    float y_offset = 0.5f;
+    bool isTeleporting;
 
+    float ground_y_offset = 0.5f;
+
+    int phasedCount;
 
 
     void Awake() {
@@ -38,8 +42,11 @@ public class GodTeleportsPlayer : MonoBehaviour
     void Update() {
         if (remainingTeleportMoves > 0) {
             if (Input.GetKeyDown(KeyCode.Space)) {   // change input key later?
-                if (Player.Instance.movePlayer == null)
-                    FindRandomDestroyableTile();
+                if (Player.Instance.movePlayer == null) {
+                    if (!isTeleporting) {
+                        FindRandomDestroyableTile();
+                    }
+                }
             }
         }
     }
@@ -47,25 +54,16 @@ public class GodTeleportsPlayer : MonoBehaviour
 
     void FindRandomDestroyableTile()
     {
-        // Note: "Cube(#)" gameObjects aren't sequentially ordered, and will not match up with the # that newTile finds
+        // Note: "Cube(#)" GameObjects aren't sequentially ordered, so they won't match up with the found newTile #
         var totalTiles = GameManager.Instance.listOfDestroyableTiles.Count;
         int randomNumber = Random.Range(0, totalTiles);
         newTilePos = GameManager.Instance.listOfDestroyableTiles[randomNumber].transform.position;
-        newTilePos = new Vector3 (newTilePos.x, newTilePos.y + y_offset, newTilePos.z);
-
+        newTilePos = new Vector3 (newTilePos.x, newTilePos.y + ground_y_offset, newTilePos.z);
+        
         StartCoroutine(Teleport());
     }
 
-    Coroutine testParticleMove;
-
-    // IEnumerator TestParticleMove()
-    // {
-    //     yield return new WaitForSeconds(postTeleportMovementLockoutTime/5);
-    //     teleportParticle.transform.position += new Vector3(0, -0.5f, 0);
-    //     // teleportParticle.transform.GetChild(0).gameObject.transform.position += new Vector3(0, 0, -0.5f);
-
-    //     yield return TestParticleMove();
-    // }
+    
 
     IEnumerator PhaseOutParticlesOverMovementLockout(float divisor)
     {
@@ -80,12 +78,12 @@ public class GodTeleportsPlayer : MonoBehaviour
         else yield return StartCoroutine(PhaseOutParticlesOverMovementLockout(divisor));
     }
 
-    int phasedCount;
 
-    IEnumerator Teleport() 
+    IEnumerator Teleport()
     {
-        // add sound effects later.
-
+        isTeleporting = true;
+        GetComponent<AudioSource>().Play();
+        
         followPlayer = true;
         remainingTeleportMoves--;
         player.isMoving = true;
@@ -102,14 +100,15 @@ public class GodTeleportsPlayer : MonoBehaviour
         yield return StartCoroutine(PhaseOutParticlesOverMovementLockout(20));
 
         player.isMoving = false;
+        isTeleporting = false;
 
         yield return null;
     }
 
 
     void SetNewPlayerPos() {
-        if (Player.Instance.LandedOnNormalTile())
-            Player.Instance.DisableAndReplaceTile(player.hit.transform.gameObject, true);
-        Player.Instance.transform.position = newTilePos;        
+        // if (Player.Instance.LandedOnNormalTile())
+            // Player.Instance.DisableAndReplaceTile(player.hit.transform.gameObject, true);
+        Player.Instance.transform.position = newTilePos;
     }
 }

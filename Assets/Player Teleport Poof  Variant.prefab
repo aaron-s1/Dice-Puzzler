@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 2.2
       objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 856ddc11c4d1bd54885aa67f69f72cdf, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: 856ddc11c4d1bd54885aa67f69f72cdf, type: 3}
       propertyPath: looping
       value: 0

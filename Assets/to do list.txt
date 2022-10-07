@@ -1,5 +1,5 @@
 ~~ Teleport ~~
-- God teleports player. Graphics, special poof, special audio cue.
+- Special audio cue.
 
 
 ~~ Cameras ~~
@@ -15,8 +15,11 @@
 - Bug test.
 
 ~~ Ending Game ~~
+- Give player 'give up' option.
 - Decide on winning tiles amount.
+- Save off highest score.
 
 
 > clean up scripts
+> asset credits
 

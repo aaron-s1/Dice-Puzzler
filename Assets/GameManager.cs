@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     // ONLY used by other scripts.
     public void RemoveFromDestroyableTilesList(GameObject tile)
     {
+        Debug.Log("removed from list"); 
         listOfDestroyableTiles.Remove(tile);
         ListTilesRemaining(-1);
     }
@@ -93,7 +94,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
             if (Input.GetKey(KeyCode.W))
                 if (Input.GetKey(KeyCode.E))
-                    if (Input.GetKey(KeyCode.R))                        
-                        Debug.Log(devModeEnabled = true);
+                    if (Input.GetKey(KeyCode.R)) {
+        
+            Debug.Log(devModeEnabled = true);
+            GetComponent<GodTeleportsPlayer>().remainingTeleportMoves = 5000;
+        }
     }
 }
