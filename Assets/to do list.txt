@@ -1,25 +1,33 @@
-~~ Teleport ~~
-- Special audio cue.
+~~ Sound Effects ~~
+- Tile poofing sound.
 
 
 ~~ Cameras ~~
+- Affix Camera views of sides to screen...
+- ... fix their lighting
+
 - Fix camera positions.
 - Remap some input keys.
 
 
 ~~ Player ~~
-- Show 2D position
 
 
-~~ TESTING ~~
-- Bug test.
 
 ~~ Ending Game ~~
 - Give player 'give up' option.
 - Decide on winning tiles amount.
-- Save off highest score.
+- Save off highest score?
+
+
+~~ UI ~~
+- "Tiles Remaining: "
+" God hand moves
+
 
 
 > clean up scripts
+> clean up folders
+> delete assets
 > asset credits
-
+> rename project

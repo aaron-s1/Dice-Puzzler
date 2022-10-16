@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public bool testCanUpdateDiceSides;
+
     public static Player Instance { get; private set; }
 
     [SerializeField] [Range(0.05f, 1f)] float timeToMove = 1f;
@@ -106,7 +108,8 @@ public class Player : MonoBehaviour
     {
         if (!ValidMovementFound())
             yield break;
-        
+
+        testCanUpdateDiceSides = false;        
         isMoving = true;
 
         float elapsedTime = 0;
@@ -140,6 +143,7 @@ public class Player : MonoBehaviour
         }
 
         movePlayer = null;
+        testCanUpdateDiceSides = true;
         isMoving = false;
 
         yield return null;
@@ -238,7 +242,6 @@ public class Player : MonoBehaviour
     // not movement related.
 
     public void DisableAndReplaceTile(GameObject tile, bool replaceWithSpecialTile = false) {
-        Debug.Log("replaced");
         // tile.GetComponent<FirePoofParticles>().Fire(replaceWithSpecialTile);
         GameManager.Instance.RemoveFromDestroyableTilesList(tile);
 
@@ -246,7 +249,6 @@ public class Player : MonoBehaviour
 
         if (replaceWithSpecialTile) 
         {
-            Debug.Log("should spawn special tile");
             var spawnedSpecialTile = Instantiate(specialTile, tile.transform.position, tile.transform.rotation);
             spawnedSpecialTile.transform.parent = GameManager.Instance.replacedTiles.transform;
         }

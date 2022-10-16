@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GodTeleportsPlayer : MonoBehaviour
 {
+    // Refactor + put this elsewhere later.
+
     Player player;
 
     public int remainingTeleportMoves;
-    // [SerializeField] int remainingTeleportMoves;
     [SerializeField] ParticleSystem teleportParticle;
-    // [SerializeField] AudioClip teleportSoundEffect;
     [Space(10)]
     [SerializeField] float teleportTime;
     [SerializeField] float postTeleportMovementLockoutTime;
@@ -19,22 +19,22 @@ public class GodTeleportsPlayer : MonoBehaviour
     Vector3 newTilePos;
 
     bool isTeleporting;
+    bool teleportParticleFollowsPlayer;
 
-    float ground_y_offset = 0.5f;
+    static float ground_y_offset = 0.5f;
 
-    int phasedCount;
+    int phasingOutParticlesCount;
 
 
     void Awake() {
         player = Player.Instance;
         teleportParticle = Instantiate(teleportParticle, transform.position, transform.rotation);
-        followPlayer = true;
+        teleportParticleFollowsPlayer = true;
     }
 
-    bool followPlayer;
 
     void FixedUpdate() {
-        if (followPlayer)
+        if (teleportParticleFollowsPlayer)
             teleportParticle.transform.position = Player.Instance.transform.position;
     }
 
@@ -65,14 +65,16 @@ public class GodTeleportsPlayer : MonoBehaviour
 
     
 
+    // make less.... stupidly coded... later.
+    
     IEnumerator PhaseOutParticlesOverMovementLockout(float divisor)
     {
-        phasedCount++;
+        phasingOutParticlesCount++;
         yield return new WaitForSeconds(postTeleportMovementLockoutTime / divisor);
         teleportParticle.transform.position += new Vector3(0,  -2.5f / divisor, 0);
 
-        if (phasedCount >= divisor) {
-            phasedCount = 0;
+        if (phasingOutParticlesCount >= divisor) {
+            phasingOutParticlesCount = 0;
             yield return null;
         }
         else yield return StartCoroutine(PhaseOutParticlesOverMovementLockout(divisor));
@@ -84,7 +86,7 @@ public class GodTeleportsPlayer : MonoBehaviour
         isTeleporting = true;
         GetComponent<AudioSource>().Play();
         
-        followPlayer = true;
+        teleportParticleFollowsPlayer = true;
         remainingTeleportMoves--;
         player.isMoving = true;
         teleportParticle.Play();
@@ -92,7 +94,7 @@ public class GodTeleportsPlayer : MonoBehaviour
         yield return new WaitForSeconds(teleportTime);
         SetNewPlayerPos();
         
-        followPlayer = false;
+        teleportParticleFollowsPlayer = false;
         teleportParticle.transform.position = player.transform.position;
         
         teleportParticle.Stop(true);

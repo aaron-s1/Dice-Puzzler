@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
     // ONLY used by other scripts.
     public void RemoveFromDestroyableTilesList(GameObject tile)
     {
-        Debug.Log("removed from list"); 
         listOfDestroyableTiles.Remove(tile);
         ListTilesRemaining(-1);
     }
