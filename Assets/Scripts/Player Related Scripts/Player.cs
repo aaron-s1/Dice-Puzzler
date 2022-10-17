@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    public bool testCanUpdateDiceSides;
+    // public bool testCanUpdateDiceSides;
 
     public static Player Instance { get; private set; }
 
@@ -109,7 +108,7 @@ public class Player : MonoBehaviour
         if (!ValidMovementFound())
             yield break;
 
-        testCanUpdateDiceSides = false;        
+        // testCanUpdateDiceSides = false;        
         isMoving = true;
 
         float elapsedTime = 0;
@@ -143,7 +142,7 @@ public class Player : MonoBehaviour
         }
 
         movePlayer = null;
-        testCanUpdateDiceSides = true;
+        // testCanUpdateDiceSides = true;
         isMoving = false;
 
         yield return null;

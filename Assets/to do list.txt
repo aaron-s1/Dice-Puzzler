@@ -1,16 +1,15 @@
 ~~ Sound Effects ~~
-- Tile poofing sound.
+- Tile poofing sound? (might get annoying)
 
 
 ~~ Cameras ~~
-- Affix Camera views of sides to screen...
-- ... fix their lighting
-
-- Fix camera positions.
-- Remap some input keys.
+- Fix up static (numpad: 8 4 6 5) positions??
 
 
-~~ Player ~~
+~~ Player ~~ 
+- Add sectionings around each side??
+- Is too well-lit??
+
 
 
 
@@ -21,9 +20,7 @@
 
 
 ~~ UI ~~
-- "Tiles Remaining: "
-" God hand moves
-
+- Make 2D sides graphic move with changes to play screen
 
 
 > clean up scripts
@@ -31,3 +28,4 @@
 > delete assets
 > asset credits
 > rename project
+> write up gameplay explanation
