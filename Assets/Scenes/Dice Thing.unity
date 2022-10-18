@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 860a66ca4259b384f9ec01b687f71c3c, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 42554c560692bab44948be1eca99837f, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 2800000, guid: d9b31ebd60af68c469212c1a9f513e74, type: 3}
   m_Sun: {fileID: 452875022}
-  m_IndirectSpecularColor: {r: 0.04434053, g: 0.03931733, b: 0.047051936, a: 1}
+  m_IndirectSpecularColor: {r: 0.23525932, g: 0.25534865, b: 0.33477983, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8422,6 +8422,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 8978590769200421401, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978590769200421401, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f12d680b3c37c3c4fae5c220798d9977, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
 --- !u!4 &265364941 stripped
@@ -13477,6 +13485,10 @@ PrefabInstance:
     - target: {fileID: 8978590769185356505, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978590769200421401, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8978590769200456633, guid: d54f72c4baf61b946afea3c947a3af78, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
