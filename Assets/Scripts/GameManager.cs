@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
                     if (Input.GetKey(KeyCode.R)) {
         
             Debug.Log(devModeEnabled = true);
-            GetComponent<GodTeleportsPlayer>().remainingTeleportMoves = 5000;
+            GetComponent<GodTeleportsPlayer>().teleportsRemaining = 5000;
         }
     }
 }

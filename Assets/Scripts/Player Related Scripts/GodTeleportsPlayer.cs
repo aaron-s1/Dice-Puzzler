@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GodTeleportsPlayer : MonoBehaviour
 {
@@ -8,8 +9,9 @@ public class GodTeleportsPlayer : MonoBehaviour
 
     Player player;
 
-    public int remainingTeleportMoves;
+    public int teleportsRemaining;
     [SerializeField] ParticleSystem teleportParticle;
+    [SerializeField] TextMeshProUGUI teleportsRemainingNumberUI;
     [Space(10)]
     [SerializeField] float teleportTime;
     [SerializeField] float postTeleportMovementLockoutTime;
@@ -27,6 +29,7 @@ public class GodTeleportsPlayer : MonoBehaviour
 
 
     void Awake() {
+        teleportsRemainingNumberUI.text = teleportsRemaining.ToString();
         player = Player.Instance;
         teleportParticle = Instantiate(teleportParticle, transform.position, transform.rotation);
         teleportParticleFollowsPlayer = true;
@@ -40,7 +43,7 @@ public class GodTeleportsPlayer : MonoBehaviour
 
 
     void Update() {
-        if (remainingTeleportMoves > 0) {
+        if (teleportsRemaining > 0) {
             if (Input.GetKeyDown(KeyCode.Space)) {   // change input key later?
                 if (Player.Instance.movePlayer == null) {
                     if (!isTeleporting) {
@@ -84,10 +87,27 @@ public class GodTeleportsPlayer : MonoBehaviour
     IEnumerator Teleport()
     {
         isTeleporting = true;
-        GetComponent<AudioSource>().Play();
+
+        var playerAudio = player.GetComponent<AudioSource>();
+        playerAudio.PlayOneShot(playerAudio.clip);
+
+        // Debug.Log(playerAudio);
+        // var clip = playerAudio.clip;
+
+
+        // var playerAudioSource = player.GetComponent<AudioSource>();
+        // Debug.Log(playerAudioSource);
+        // playerAudioSource.PlayOneShot(playerAudioSource.clip);
+        // Debug.Log(playeraud;
+
+        // player.GetComponent<AudioSource>().Play();
+        // player.GetComponent<AudioSource>().PlayOneShot();
         
         teleportParticleFollowsPlayer = true;
-        remainingTeleportMoves--;
+
+        teleportsRemaining--;
+        teleportsRemainingNumberUI.text = teleportsRemaining.ToString();
+
         player.isMoving = true;
         teleportParticle.Play();
 

@@ -1,5 +1,6 @@
 ~~ Sound Effects ~~
 - Tile poofing sound? (might get annoying)
+~ Ambience music
 
 
 ~~ Cameras ~~
@@ -8,8 +9,10 @@
 
 ~~ Player ~~ 
 - Add sectionings around each side??
-- Is too well-lit??
 
+
+~~ Teleport ~~
+- (limit teleports)
 
 
 
@@ -19,13 +22,12 @@
 - Save off highest score?
 
 
-~~ UI ~~
-- Make 2D sides graphic move with changes to play screen
+~~ UI ~~ 
+- pause menu
+- option to disable ambience
 
 
-> clean up scripts
-> clean up folders
-> delete assets
+
+
 > asset credits
-> rename project
 > write up gameplay explanation
