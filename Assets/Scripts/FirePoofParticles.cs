@@ -6,7 +6,6 @@ public class FirePoofParticles : MonoBehaviour
 {    
     public void Fire(bool specialTileSpawned) 
     {
-        Debug.Log("fired poof");
         var particlesObj = transform.GetChild(0).gameObject;
         if (particlesObj == null)
             return;

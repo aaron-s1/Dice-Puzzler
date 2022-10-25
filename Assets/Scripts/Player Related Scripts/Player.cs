@@ -243,6 +243,7 @@ public class Player : MonoBehaviour
     public void DisableAndReplaceTile(GameObject tile, bool replaceWithSpecialTile = false) {
         // tile.GetComponent<FirePoofParticles>().Fire(replaceWithSpecialTile);
         GameManager.Instance.RemoveFromDestroyableTilesList(tile);
+        
 
         tile.SetActive(false);
 
@@ -251,6 +252,8 @@ public class Player : MonoBehaviour
             var spawnedSpecialTile = Instantiate(specialTile, tile.transform.position, tile.transform.rotation);
             spawnedSpecialTile.transform.parent = GameManager.Instance.replacedTiles.transform;
         }
+
+        // else GameManager.Instance.IncrementScore();
     }
 
 

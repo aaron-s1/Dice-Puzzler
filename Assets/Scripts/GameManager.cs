@@ -12,18 +12,23 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI destroyableTilesText;
 
+    [SerializeField] AudioSource ambienceAudioSource;
+
     public GameObject replacedTiles;
     [SerializeField] GameObject destroyableTiles;
     [HideInInspector] public List<GameObject> listOfDestroyableTiles;
 
-
     [HideInInspector] public GameObject storingFiredParticles;
 
+
+    public int minimumTilesRemainingToWin;
+
+    public bool canReloadScene;
     
+    int score;
     float originalTimeScale;
 
     bool devModeEnabled;
-
 
     void Awake()
     {
@@ -46,35 +51,73 @@ public class GameManager : MonoBehaviour
         CheckForDevMode();
         EscapeKeyPausesGame();
         I_KeyReloadsScene();
+        M_KeyTogglesAmbience();
+        // F_KeyEndsGame();
+        // G_KeyForfeitsGame();
     }
 
-
+    
     // ONLY used by self.
     private void AddToDestroyableTileList(GameObject tile)
     {
         listOfDestroyableTiles.Add(tile);
-        ListTilesRemaining(1);
+        AdjustTilesRemaining(1);
     }
 
     // ONLY used by other scripts.
     public void RemoveFromDestroyableTilesList(GameObject tile)
     {
         listOfDestroyableTiles.Remove(tile);
-        ListTilesRemaining(-1);
+        AdjustTilesRemaining(-1);
     }
 
+    public int remainingTiles;
 
-    void ListTilesRemaining(int adjustment) =>
-        destroyableTilesText.text = (int.Parse(destroyableTilesText.text) + adjustment).ToString();
-    
 
+    void AdjustTilesRemaining(int adjustment) {
+        remainingTiles = (int.Parse(destroyableTilesText.text));
+        remainingTiles += adjustment;
+                        
+        destroyableTilesText.text = remainingTiles.ToString();
+        // CheckIfWonGame(remaining);
+    }
+
+    public void CheckIfWonGame(int remaining) {
+        if (minimumTilesRemainingToWin >= remaining)
+        {
+            // game won. do stuff.
+        }
+    }
+
+    // public int ReturnScore() {
+    //     return score;
+    // }
 
 
     void I_KeyReloadsScene()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-            SceneManager.LoadScene("Dice Thing");
+        if (canReloadScene)
+            if (Input.GetKeyDown(KeyCode.I))
+                SceneManager.LoadScene("Dice Thing");
     }
+
+    void M_KeyTogglesAmbience()
+    {
+        if (Input.GetKeyDown(KeyCode.M)) {
+            if (ambienceAudioSource.isPlaying)
+                ambienceAudioSource.Pause();
+            else ambienceAudioSource.UnPause();
+        }
+    }
+
+    // void G_KeyForfeitsGame()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.G))
+    //     {
+    //         // (create new UI menu)
+    //         // UI menu asks if player wants to forfeit
+    //     }
+    // }
 
     void EscapeKeyPausesGame() 
     {
@@ -93,10 +136,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
             if (Input.GetKey(KeyCode.W))
                 if (Input.GetKey(KeyCode.E))
-                    if (Input.GetKey(KeyCode.R)) {
+                    if (Input.GetKey(KeyCode.R))
+                        Debug.Log("devModeEnabled = " + devModeEnabled);
         
-            Debug.Log(devModeEnabled = true);
-            GetComponent<GodTeleportsPlayer>().teleportsRemaining = 5000;
-        }
+        GetComponent<GodTeleportsPlayer>().teleportsRemaining = 5000;
     }
 }

@@ -1,6 +1,5 @@
 ~~ Sound Effects ~~
 - Tile poofing sound? (might get annoying)
-~ Ambience music
 
 
 ~~ Cameras ~~
@@ -15,17 +14,14 @@
 - (limit teleports)
 
 
-
 ~~ Ending Game ~~
-- Give player 'give up' option.
 - Decide on winning tiles amount.
 - Save off highest score?
+- Can only reload scene after giving up
 
 
 ~~ UI ~~ 
-- pause menu
-- option to disable ambience
-
+- pause menu?
 
 
 
