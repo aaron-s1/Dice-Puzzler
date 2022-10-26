@@ -15,9 +15,7 @@
 
 
 ~~ Ending Game ~~
-- Decide on winning tiles amount.
 - Save off highest score?
-- Can only reload scene after giving up
 
 
 ~~ UI ~~ 

@@ -53375,7 +53375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bbe51ebd5e5784a93322baed6aef92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportsRemaining: 50
+  teleportsRemaining: 5
   teleportParticle: {fileID: 7578114259310576178, guid: ab720507f9340fd40b16e3e5b163504e, type: 3}
   teleportsRemainingNumberUI: {fileID: 218318766}
   teleportTime: 1
@@ -53390,7 +53390,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7965624f48a33ef479ab68f5e67e5e37, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 0.6
