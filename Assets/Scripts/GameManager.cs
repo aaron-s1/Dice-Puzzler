@@ -18,13 +18,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject destroyableTiles;
     [HideInInspector] public List<GameObject> listOfDestroyableTiles;
 
+    [SerializeField] GameObject pausedScreen;
+    
     [HideInInspector] public GameObject storingFiredParticles;
 
+    [HideInInspector] public int minimumTilesRemainingToWin;
 
-    public int minimumTilesRemainingToWin;
+    [HideInInspector] public bool canReloadScene;
 
-    public bool canReloadScene;
-    
+
+
     int score;
     float originalTimeScale;
 
@@ -51,9 +54,7 @@ public class GameManager : MonoBehaviour
         CheckForDevMode();
         EscapeKeyPausesGame();
         I_KeyReloadsScene();
-        M_KeyTogglesAmbience();
-        // F_KeyEndsGame();
-        // G_KeyForfeitsGame();
+        M_KeyTogglesAmbienceMusic();
     }
 
     
@@ -79,19 +80,7 @@ public class GameManager : MonoBehaviour
         remainingTiles += adjustment;
                         
         destroyableTilesText.text = remainingTiles.ToString();
-        // CheckIfWonGame(remaining);
     }
-
-    public void CheckIfWonGame(int remaining) {
-        if (minimumTilesRemainingToWin >= remaining)
-        {
-            // game won. do stuff.
-        }
-    }
-
-    // public int ReturnScore() {
-    //     return score;
-    // }
 
 
     void I_KeyReloadsScene()
@@ -101,7 +90,8 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Dice Thing");
     }
 
-    void M_KeyTogglesAmbience()
+
+    void M_KeyTogglesAmbienceMusic()
     {
         if (Input.GetKeyDown(KeyCode.M)) {
             if (ambienceAudioSource.isPlaying)
@@ -110,25 +100,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // void G_KeyForfeitsGame()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.G))
-    //     {
-    //         // (create new UI menu)
-    //         // UI menu asks if player wants to forfeit
-    //     }
-    // }
+
 
     void EscapeKeyPausesGame() 
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Time.timeScale == originalTimeScale)
+            if (Time.timeScale == originalTimeScale) {
+                pausedScreen.SetActive(true);
                 Time.timeScale = 0;
-            else if (Time.timeScale == 0)
+            }
+            else if (Time.timeScale == 0) {
+                pausedScreen.SetActive(false);
                 Time.timeScale = originalTimeScale;
+            }
         }
     }
+
 
     // Q -> W -> E -> R
     void CheckForDevMode() 
@@ -136,9 +124,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
             if (Input.GetKey(KeyCode.W))
                 if (Input.GetKey(KeyCode.E))
-                    if (Input.GetKey(KeyCode.R))
+                    if (Input.GetKey(KeyCode.R)) {
                         Debug.Log("devModeEnabled = " + devModeEnabled);
+                        GetComponent<GodTeleportsPlayer>().teleportsRemaining = 5000;
+                    }
         
-        GetComponent<GodTeleportsPlayer>().teleportsRemaining = 5000;
     }
 }

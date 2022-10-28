@@ -3,23 +3,16 @@
 
 
 ~~ Cameras ~~
-- Fix up static (numpad: 8 4 6 5) positions??
+- Account for resolution differences
 
 
 ~~ Player ~~ 
 - Add sectionings around each side??
 
 
-~~ Teleport ~~
-- (limit teleports)
-
-
 ~~ Ending Game ~~
 - Save off highest score?
 
-
-~~ UI ~~ 
-- pause menu?
 
 
 

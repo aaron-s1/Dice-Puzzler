@@ -21,17 +21,17 @@ public class ChangeCameras : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad5) || (Input.GetKeyDown(KeyCode.Keypad2)) )
-            SwapToCamera(mainCamera);
+        // if (Input.GetKeyDown(KeyCode.Keypad5) || (Input.GetKeyDown(KeyCode.Keypad2)) )
+        //     SwapToCamera(mainCamera);
 
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-            SwapToCamera(backCamera);
+        // if (Input.GetKeyDown(KeyCode.Keypad8))
+        //     SwapToCamera(backCamera);
 
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-            SwapToCamera(rightCamera);
+        // if (Input.GetKeyDown(KeyCode.Keypad6))
+        //     SwapToCamera(rightCamera);
 
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-            SwapToCamera(leftCamera);
+        // if (Input.GetKeyDown(KeyCode.Keypad4))
+        //     SwapToCamera(leftCamera);
     }
 
     

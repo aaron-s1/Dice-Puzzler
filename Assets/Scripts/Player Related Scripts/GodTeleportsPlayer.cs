@@ -91,17 +91,6 @@ public class GodTeleportsPlayer : MonoBehaviour
         var playerAudio = player.GetComponent<AudioSource>();
         playerAudio.PlayOneShot(playerAudio.clip);
 
-        // Debug.Log(playerAudio);
-        // var clip = playerAudio.clip;
-
-
-        // var playerAudioSource = player.GetComponent<AudioSource>();
-        // Debug.Log(playerAudioSource);
-        // playerAudioSource.PlayOneShot(playerAudioSource.clip);
-        // Debug.Log(playeraud;
-
-        // player.GetComponent<AudioSource>().Play();
-        // player.GetComponent<AudioSource>().PlayOneShot();
         
         teleportParticleFollowsPlayer = true;
 
@@ -128,9 +117,6 @@ public class GodTeleportsPlayer : MonoBehaviour
     }
 
 
-    void SetNewPlayerPos() {
-        // if (Player.Instance.LandedOnNormalTile())
-            // Player.Instance.DisableAndReplaceTile(player.hit.transform.gameObject, true);
+    void SetNewPlayerPos() =>
         Player.Instance.transform.position = newTilePos;
-    }
 }

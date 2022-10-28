@@ -1,12 +1,43 @@
+"Sci-Fi Music Pack 1"
+by pdkmusic
+https://assetstore.unity.com/packages/audio/music/sci-fi-music-pack-1-105576
+("Gliese 1214b" used for background music)
 
 
+blah
+by 
+blah.com
+(x used for teleport sound)
 
 
+"Cartoon FX" (?)
+by
+.
+("teleporter" (variant) for teleport particle effect)
 
 
+"Dungeon Tiles Generator"
+by Quayside Games (Adam Speers)
+https://assetstore.unity.com/packages/3d/environments/dungeons/dungeon-tiles-generator-194192
+(tiles??)
 
 
+Dice d6 game ready PBR
+by Armor and Rum
+https://assetstore.unity.com/packages/3d/props/tools/dice-d6-game-ready-pbr-200151
+(dice {player})
 
+
+Lowpoly Tiles Set
+by JuniorPro
+https://assetstore.unity.com/packages/3d/environments/lowpoly-tiles-set-75524
+(tiles graphics)
+
+
+Star Nest Skybox
+by Ninjapretzel
+https://assetstore.unity.com/packages/vfx/shaders/star-nest-skybox-63726
+(skybox)
 
 
 Made by Aaron S.
